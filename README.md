@@ -20,17 +20,33 @@ rather than licensed ArcGIS seats.
 
 ## Status
 
-**Experimental / early scaffold.** The dock widget currently exposes a 1–220 m
-slider with no raster logic wired up yet. Key open decisions (see the project
-note in the author's knowledgebase) are:
+**Experimental.** First functional release (v0.1):
 
-- Porting approach for the raster logic (QGIS Processing chain vs. raw
-  GDAL/rasterio/numpy).
-- Precomputed polygon layer (one feature class, 220 levels, like the original)
-  vs. on-the-fly raster reclassification per slider move.
-- Vertical datum handling — the original assumes NN2000 (Norwegian height
-  reference system); the plugin should surface/validate this rather than
-  assume it silently.
+- Pick any loaded raster DEM layer (and band) from the dock widget. The slider
+  range is read from the DEM's own elevation statistics.
+- **Live visualisation:** moving the slider recolors the DEM in place — cells
+  at or below the current level are painted as water, the rest as land — via
+  a raster shader, not a precomputed vector layer like the original ArcGIS
+  script (QGIS has no equivalent to ArcGIS Pro's Range Slider widget for
+  that). Water and land opacity are independently adjustable so basemaps or
+  other project layers (e.g. a site inventory) stay visible underneath.
+- **On-demand polygon export:** a separate button thresholds and polygonizes
+  the *current* level into a real vector layer, for spatial analysis (e.g.
+  overlaying against known site locations) — this is a deliberately separate,
+  slower operation from the live visualisation. Includes:
+  - Raster sieve filtering to remove few-pixel "island"/"lake" noise from the
+    DEM's resolution limit, before vectorizing (so no holes are left behind).
+  - Douglas-Peucker simplification and optional Chaikin smoothing, with the
+    polygon buffered outward beforehand and cropped back to the DEM's real
+    extent afterward — without this, generalizing would treat the DEM's
+    bounding box corners as real coastline and cut into valid area there.
+  - Exported polygons carry `water_level_m`, `vertical_datum` and `method`
+    attributes. **Vertical datum is never assumed** — the original ArcGIS
+    script hardcodes NN2000, but this plugin always leaves it to the user
+    (defaulting to "Unknown") since the plugin can't detect a DEM's actual
+    reference from the raster alone.
+- **UI language** follows the QGIS application's own locale setting
+  (English/Norwegian Bokmål).
 
 ## Development
 

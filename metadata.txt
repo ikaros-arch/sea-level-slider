@@ -7,7 +7,7 @@ about=Sea Level Slider adds a dockable slider that shows how a digital elevation
 
     Ported from an ArcGIS Pro script (arcpy, Con + RasterToPolygon over a DEM, 1-220 m range) drafted by Steinar Kristensen at the Museum of Cultural History, University of Oslo.
 category=Raster
-version=0.1.0
+version=0.1
 author=Hallvard Indgjerd
 email=hallvard.indgjerd@khm.uio.no
 tags=dem,sea level,paleoshoreline,strandlinje,archaeology,norway,raster,slider,elevation
@@ -18,6 +18,13 @@ experimental=True
 deprecated=False
 icon=icons/icon.png
 changelog=
-    0.1.0 (2026-10-08) - initial scaffold
-    - Dock widget with a 1-220 m slider (UI only, no raster logic wired up yet).
-    - Plugin metadata, packaging script and licensing in place.
+    0.1 (2026-10-08) - initial experimental release
+    - Pick any loaded DEM layer/band; the water level slider recolors it live
+      (independently adjustable water/land opacity, so other layers stay visible).
+    - Export the current level as a polygon, with island/lake noise filtering
+      (raster sieve), Douglas-Peucker simplification and optional corner
+      smoothing - edge-of-DEM artifacts are avoided by buffering before and
+      cropping back after generalizing.
+    - Exported polygons carry water_level_m, vertical_datum and method
+      attributes (vertical datum is never assumed, only ever user-supplied).
+    - UI follows the QGIS application's language setting (English/Norwegian).
