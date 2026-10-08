@@ -16,7 +16,7 @@ class SeaLevelSliderDockWidget(QDockWidget):
         layout = QVBoxLayout()
 
         self.label = QLabel(f"Water level: {MIN_LEVEL_M} m")
-        self.slider = QSlider(Qt.Horizontal)
+        self.slider = QSlider(Qt.Orientation.Horizontal)
         self.slider.setMinimum(MIN_LEVEL_M)
         self.slider.setMaximum(MAX_LEVEL_M)
         self.slider.setValue(MIN_LEVEL_M)

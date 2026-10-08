@@ -34,7 +34,7 @@ class SeaLevelSliderPlugin:
             if self.dock_widget is None:
                 self.dock_widget = SeaLevelSliderDockWidget()
                 self.dock_widget.closingPlugin.connect(self._on_dock_closed)
-                self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dock_widget)
+                self.iface.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.dock_widget)
             self.dock_widget.show()
         elif self.dock_widget is not None:
             self.dock_widget.hide()
