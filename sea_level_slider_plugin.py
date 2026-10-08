@@ -5,6 +5,7 @@ from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
+from .i18n import tr
 from .sea_level_slider_dockwidget import SeaLevelSliderDockWidget
 
 
@@ -16,16 +17,17 @@ class SeaLevelSliderPlugin:
 
     def initGui(self):
         icon_path = os.path.join(os.path.dirname(__file__), "icons", "icon.png")
-        self.action = QAction(QIcon(icon_path), "Sea Level Slider", self.iface.mainWindow())
+        self.action = QAction(QIcon(icon_path), tr("Sea Level Slider"), self.iface.mainWindow())
         self.action.setCheckable(True)
         self.action.triggered.connect(self.toggle_dock_widget)
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("&Sea Level Slider", self.action)
+        self.iface.addPluginToMenu(tr("&Sea Level Slider"), self.action)
 
     def unload(self):
-        self.iface.removePluginMenu("&Sea Level Slider", self.action)
+        self.iface.removePluginMenu(tr("&Sea Level Slider"), self.action)
         self.iface.removeToolBarIcon(self.action)
         if self.dock_widget is not None:
+            self.dock_widget.release_styler()
             self.iface.removeDockWidget(self.dock_widget)
             self.dock_widget = None
 

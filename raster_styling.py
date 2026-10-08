@@ -25,7 +25,7 @@ def compute_band_min_max(layer, band, sample_size=250000):
 
 
 class WaterLevelStyler:
-    """Owns the raster shader driving live water-level recoloring for one layer/band.
+    """Owns the raster shader driving live water -level recoloring for one layer/band.
 
     Cells <= the water level are painted as "water"; cells above are painted as
     "land". Both are independently semi-transparent so other project layers (a
@@ -37,6 +37,11 @@ class WaterLevelStyler:
         self.band = band
         self._renderer = None
         self._shader_function = None
+        # setRenderer() below takes ownership of (and deletes) the layer's current
+        # renderer, so the original must be cloned now, before we ever touch it, or
+        # restore() would later try to re-attach an already-deleted C++ object.
+        old_renderer = layer.renderer()
+        self._original_renderer = old_renderer.clone() if old_renderer is not None else None
         self._build_renderer()
 
     def _build_renderer(self):
@@ -71,3 +76,15 @@ class WaterLevelStyler:
             ]
         )
         self.layer.triggerRepaint()
+
+    def restore(self):
+        """Put the layer back how it looked before this styler touched it."""
+        try:
+            if self._original_renderer is not None:
+                self.layer.setRenderer(self._original_renderer)
+                self._original_renderer = None  # ownership transferred to the layer
+            self.layer.triggerRepaint()
+        except RuntimeError:
+            # The underlying layer was already deleted (e.g. removed from the
+            # project) - nothing left to restore.
+            pass
