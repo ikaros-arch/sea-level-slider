@@ -11,3 +11,5 @@ Thumbs.db
 
 # Build artifacts (the distribution zip from scripts/make_zip.sh)
 *.zip
+
+CLAUDE.md
