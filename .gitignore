@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# QGIS / editor noise
+*.bak
+.DS_Store
+Thumbs.db
+
+# Build artifacts (the distribution zip from scripts/make_zip.sh)
+*.zip

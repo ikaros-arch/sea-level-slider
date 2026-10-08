@@ -1,0 +1,23 @@
+[general]
+name=Sea Level Slider
+qgisMinimumVersion=3.22
+qgisMaximumVersion=4.99
+description=Interactive visualisation of historical and prehistoric sea levels over a DEM
+about=Sea Level Slider adds a dockable slider that shows how a digital elevation model (DEM) would be submerged at a given historical/prehistoric sea level, for shoreline-displacement ("strandlinje") studies used in Norwegian archaeology to model land uplift and predict coastal site locations since the last ice age.
+
+    Ported from an ArcGIS Pro script (arcpy, Con + RasterToPolygon over a DEM, 1-220 m range) drafted by Steinar Kristensen at the Museum of Cultural History, University of Oslo.
+category=Raster
+version=0.1.0
+author=Hallvard Indgjerd
+email=hallvard.indgjerd@khm.uio.no
+tags=dem,sea level,paleoshoreline,strandlinje,archaeology,norway,raster,slider,elevation
+homepage=https://github.com/ikaros-arch/sea-level-slider
+tracker=https://github.com/ikaros-arch/sea-level-slider/issues
+repository=https://github.com/ikaros-arch/sea-level-slider
+experimental=True
+deprecated=False
+icon=icons/icon.png
+changelog=
+    0.1.0 (2026-10-08) - initial scaffold
+    - Dock widget with a 1-220 m slider (UI only, no raster logic wired up yet).
+    - Plugin metadata, packaging script and licensing in place.

@@ -1,0 +1,10 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Files that live in the repo but must NOT ship in the QGIS plugin .zip
+# (git archive honours export-ignore; see scripts/make_zip.sh).
+scripts/             export-ignore
+.gitignore           export-ignore
+.gitattributes       export-ignore
+.github/             export-ignore
+.flake8              export-ignore
